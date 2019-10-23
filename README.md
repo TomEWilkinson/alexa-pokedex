@@ -3,8 +3,8 @@ An Alexa Skill to look up a Pokemons description using PokeAPI. will look up the
 
 
 # Example commands
-Start Pokedex
-Charmander
+Start Pokedex <br />
+Charmander <br />
 Ditto
 
 
