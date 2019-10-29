@@ -14,12 +14,11 @@ const PokedexIntentHandler = {
    async handle(handlerInput) {
     const pokemon = handlerInput.requestEnvelope.request.intent.slots.pokemon.value;
     const response = await GetPokemon(pokemon);
-    
-    console.log(response);
+    const repromptText = `If you want to know more about pokemon, say the name of another`;
 
     return handlerInput.responseBuilder
             .speak(`${response}`)
-            .reprompt("What would you like?")
+            .reprompt(repromptText)
             .getResponse();
   },
 };
@@ -86,23 +85,10 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = `Welcome, say the name of the pokemon you'd like a description of`;
+        const speakOutput = `Welcome, what pokemon would you like to hear more about?`;
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt(speakOutput)
-            .getResponse();
-    }
-};
-const HelloWorldIntentHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'HelloWorldIntent';
-    },
-    handle(handlerInput) {
-        const speakOutput = 'Hello World!';
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
             .getResponse();
     }
 };
@@ -112,7 +98,7 @@ const HelpIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'You can say hello to me! How can I help?';
+        const speakOutput = `You can ask me about a pokemon's description, which one would you like to know more about?`;
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -186,7 +172,6 @@ const ErrorHandler = {
 exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         LaunchRequestHandler,
-        HelloWorldIntentHandler,
         PokedexIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
