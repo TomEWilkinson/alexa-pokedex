@@ -24,6 +24,8 @@ const PokedexIntentHandler = {
 };
 
  const GetPokemon = async function (pokemon) {
+     //needed to replace the accented characters and to lowercase the string that comes from alexa
+     pokemon = pokemon.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
      return new Promise(((resolve, reject) => {
         var options = {
             host: 'pokeapi.co',
